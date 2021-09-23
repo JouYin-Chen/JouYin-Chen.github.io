@@ -28,8 +28,10 @@
 <meta property="og:description" content="我在工作上碰到一個需要解析的log，不是JSON, 不固定格式，也沒有固定欄位。 122021-08-30T10:20:34 api-log &amp;#123;“message”: &quot;IP: 192.168.1.1; “URI”: “&#x2F;api&#x2F;login.”, “ErrorMsg”: “user have not exist.”&amp;#125;2021-08-30T10:25:34 api-log">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2021-09-23T12:02:32.000Z">
-<meta property="article:modified_time" content="2021-09-23T12:59:37.096Z">
+<meta property="article:modified_time" content="2021-09-23T13:09:07.474Z">
 <meta property="article:author" content="JouYin Chen">
+<meta property="article:tag" content="AWS">
+<meta property="article:tag" content="Athena">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://example.com/2021/09/23/AWS-Athena-create-table-by-Grok-SerDe/">
@@ -180,7 +182,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-09-23 20:02:32 / Modified: 20:59:37" itemprop="dateCreated datePublished" datetime="2021-09-23T20:02:32+08:00">2021-09-23</time>
+              <time title="Created: 2021-09-23 20:02:32 / Modified: 21:09:07" itemprop="dateCreated datePublished" datetime="2021-09-23T20:02:32+08:00">2021-09-23</time>
             </span>
 
           
@@ -198,6 +200,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2021-08-30T10:20:34 api-log &#123;“message”: &quot;IP: 192.168.1.1; “URI”: “/api/login.”, “ErrorMsg”: “user have not exist.”&#125;</span><br><span class="line">2021-08-30T10:25:34 api-log &#123;“message”: &quot;IP: 192.168.1.2; “URI”: “/api/login.”, UserID: “123456789”, ProductID: “111-222-333”&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="Grok-SerDe"><a href="#Grok-SerDe" class="headerlink" title="Grok SerDe"></a>Grok SerDe</h3><p>我透過定義好的規則表達式Grok以及自己定義的規則來處理log。  </p>
+<span id="more"></span>
 <blockquote>
 <p>Aws support 也有提到 可以在 AWS Glue的操作頁面上去處理logs 匯入。</p>
 </blockquote>
@@ -275,6 +278,10 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/AWS/" rel="tag"># AWS</a>
+              <a href="/tags/Athena/" rel="tag"># Athena</a>
+          </div>
 
         
 
@@ -365,7 +372,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
