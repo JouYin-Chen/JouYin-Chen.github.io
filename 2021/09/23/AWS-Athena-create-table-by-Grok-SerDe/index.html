@@ -20,30 +20,32 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="紀錄記得與不記得">
-<meta property="og:type" content="website">
-<meta property="og:title" content="自娛・愚人">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="我在工作上碰到一個需要解析的log，不是JSON, 不固定格式，也沒有固定欄位。 122021-08-30T10:20:34 api-log &amp;#123;“message”: &quot;IP: 192.168.1.1; “URI”: “&#x2F;api&#x2F;login.”, “ErrorMsg”: “user have not exist.”&amp;#125;2021-08-30T10:25:34 api-log">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS Athena - create table by Grok SerDe">
+<meta property="og:url" content="http://example.com/2021/09/23/AWS-Athena-create-table-by-Grok-SerDe/index.html">
 <meta property="og:site_name" content="自娛・愚人">
-<meta property="og:description" content="紀錄記得與不記得">
+<meta property="og:description" content="我在工作上碰到一個需要解析的log，不是JSON, 不固定格式，也沒有固定欄位。 122021-08-30T10:20:34 api-log &amp;#123;“message”: &quot;IP: 192.168.1.1; “URI”: “&#x2F;api&#x2F;login.”, “ErrorMsg”: “user have not exist.”&amp;#125;2021-08-30T10:25:34 api-log">
 <meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2021-09-23T12:02:32.000Z">
+<meta property="article:modified_time" content="2021-09-23T12:59:37.096Z">
 <meta property="article:author" content="JouYin Chen">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2021/09/23/AWS-Athena-create-table-by-Grok-SerDe/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-tw'
   };
 </script>
 
-  <title>自娛・愚人</title>
+  <title>AWS Athena - create table by Grok SerDe | 自娛・愚人</title>
   
 
 
@@ -147,9 +149,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
@@ -165,10 +168,9 @@
       <meta itemprop="name" content="自娛・愚人">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/23/AWS-Athena-create-table-by-Grok-SerDe/" class="post-title-link" itemprop="url">AWS Athena - create table by Grok SerDe</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          AWS Athena - create table by Grok SerDe
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -192,7 +194,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>我在工作上碰到一個需要解析的log，不是JSON, 不固定格式，也沒有固定欄位。</p>
+        <p>我在工作上碰到一個需要解析的log，不是JSON, 不固定格式，也沒有固定欄位。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2021-08-30T10:20:34 api-log &#123;“message”: &quot;IP: 192.168.1.1; “URI”: “/api/login.”, “ErrorMsg”: “user have not exist.”&#125;</span><br><span class="line">2021-08-30T10:25:34 api-log &#123;“message”: &quot;IP: 192.168.1.2; “URI”: “/api/login.”, UserID: “123456789”, ProductID: “111-222-333”&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="Grok-SerDe"><a href="#Grok-SerDe" class="headerlink" title="Grok SerDe"></a>Grok SerDe</h3><p>我透過定義好的規則表達式Grok以及自己定義的規則來處理log。  </p>
@@ -266,145 +268,30 @@
 <h3 id="參考網址"><a href="#參考網址" class="headerlink" title="參考網址"></a>參考網址</h3><p><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/zh_tw/glue/latest/dg/custom-classifier.html#custom-classifier-grok">custom-classifier-grok
 </a><br><a target="_blank" rel="noopener" href="https://github.com/elastic/logstash/blob/v1.4.2/patterns/grok-patterns">grok-patterns</a></p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/08/SQL-Function/">
+        
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="JouYin Chen">
-      <meta itemprop="description" content="紀錄記得與不記得">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="自娛・愚人">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/01/08/SQL-Function/" class="post-title-link" itemprop="url">SQL Function</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-01-08 15:23:13" itemprop="dateCreated datePublished" datetime="2019-01-08T15:23:13+08:00">2019-01-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-05 21:58:12" itemprop="dateModified" datetime="2021-09-05T21:58:12+08:00">2021-09-05</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>通常在SQL會使用 inner join 或是 建立一張 view table 拿到想要的資料，但這次後端在拿到真實資料的時候，發現資料量太大，在使用inner join或是 view 的table, query 都回不來 會把DB整個lock 著。</p>
-<p>所以換了一個方法, 將所有需要的資料 整合成一個真的table，以下是使用 SQL 建立出 資料的table。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> [<span class="keyword">OR</span> REPLACE] <span class="keyword">FUNCTION</span> <span class="operator">&lt;</span>name<span class="operator">&gt;</span> ([<span class="operator">&lt;</span>param<span class="operator">&gt;</span>])</span><br><span class="line">	[<span class="keyword">RETURNS</span> <span class="operator">&lt;</span>void<span class="operator">|</span><span class="type">integer</span><span class="operator">|</span><span class="keyword">null</span><span class="operator">|</span>TYPE<span class="operator">|</span><span class="type">boolean</span><span class="operator">&gt;</span>]</span><br><span class="line"><span class="keyword">LANGUAGE</span> <span class="operator">&lt;</span>plpgsql<span class="operator">|</span><span class="keyword">sql</span><span class="operator">|</span>c<span class="operator">|</span>internal<span class="operator">&gt;</span></span><br><span class="line"><span class="keyword">AS</span> $$ # $$: 也可以是 $BODY$, 但 <span class="keyword">start</span> <span class="operator">&amp;</span> <span class="keyword">end</span> symbol 要相同</span><br><span class="line">	# <span class="keyword">function</span> 要做的事情</span><br><span class="line">	<span class="keyword">DECLARE</span></span><br><span class="line">		<span class="operator">&lt;</span>變數<span class="operator">&gt;</span> <span class="operator">&lt;</span>type<span class="operator">&gt;</span></span><br><span class="line">	<span class="keyword">BEGIN</span></span><br><span class="line">		# 要做的<span class="keyword">SQL</span> Query</span><br><span class="line">	<span class="keyword">END</span>;</span><br><span class="line">$$</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>param</p>
-<ul>
-<li>從執行select 來的參數</li>
-<li>參數通常會使用$1, $2，但為了可讀性會給予變數名稱，通常有兩種方式<ul>
-<li>在 CREATE FUNCTION &lt;name&gt; (參數 ) 中定義，可見example01</li>
-<li>DECLARE中使用 ALIAS來定義 subtotal ALIAS FOR $1;，可見 example02</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>可以多個</p>
-</li>
-<li><p>格式： (<name> <SQL-type>, <name> <SQL-type>)</p>
-</li>
-<li><p>RETURNS</p>
-<ul>
-<li>要回傳的值</li>
-<li>可以為 SQL type 或是 table 或是 null</li>
-</ul>
-</li>
-<li><p>LANGUAGE</p>
-<ul>
-<li>這個function 要執行的語言</li>
-</ul>
-</li>
-<li><p>AS</p>
-<ul>
-<li>定義function 所要做的事情</li>
-<li>AS 後面要接 兩個 symbol 作為開始與結束的符號，符號內定義function</li>
-</ul>
-</li>
-<li><p>BEGIN END;</p>
-<ul>
-<li>SQL 基本語法</li>
-<li>用於流程控制</li>
-</ul>
-</li>
-<li><p>DECLARE</p>
-<ul>
-<li>宣告變數</li>
-<li>格式： <name> [ CONSTANT ] <type> [ NOT NULL ] [ { DEFAULT | := } <expression> ];</li>
-<li>example:<ul>
-<li><code>quantity integer := 30;</code></li>
-<li>OR <code>quantity integer DEFAULT 32;</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>Example01：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">OR</span> REPLACE <span class="keyword">FUNCTION</span> increment(i <span class="type">integer</span>) </span><br><span class="line"><span class="keyword">RETURNS</span> <span class="type">integer</span> </span><br><span class="line"><span class="keyword">AS</span> $$</span><br><span class="line">	<span class="keyword">BEGIN</span></span><br><span class="line">  		<span class="keyword">RETURN</span> i <span class="operator">+</span> <span class="number">1</span>;</span><br><span class="line"> 	<span class="keyword">END</span>;</span><br><span class="line">$$ <span class="keyword">LANGUAGE</span> plpgsql;</span><br></pre></td></tr></table></figure></li>
-<li><p>Example02：</p>
-</li>
-</ul>
-<p>有時會將 function的 RETURN給省略</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># 使用$<span class="number">1</span>, $<span class="number">2</span>變數</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> dup(<span class="keyword">in</span> <span class="type">int</span>, <span class="keyword">OUT</span> sum <span class="type">int</span>)</span><br><span class="line"><span class="keyword">AS</span> $$ </span><br><span class="line">	<span class="keyword">BEGIN</span></span><br><span class="line">       sum :<span class="operator">=</span> $<span class="number">1</span> <span class="operator">+</span> <span class="number">1</span>;</span><br><span class="line">   <span class="keyword">END</span>;</span><br><span class="line">$$</span><br><span class="line"><span class="keyword">LANGUAGE</span> <span class="keyword">SQL</span>;</span><br><span class="line"></span><br><span class="line"># <span class="keyword">OR</span></span><br><span class="line"># 使用<span class="keyword">DECLARE</span> 定義變數名</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> dup2(<span class="keyword">in</span> <span class="type">int</span>, <span class="keyword">OUT</span> sum <span class="type">int</span>)</span><br><span class="line"><span class="keyword">AS</span> $$</span><br><span class="line">  <span class="keyword">DECLARE</span></span><br><span class="line">		x <span class="type">int</span> :<span class="operator">=</span> $<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">BEGIN</span></span><br><span class="line">		sum :<span class="operator">=</span> x <span class="operator">+</span> <span class="number">1</span>;</span><br><span class="line">   <span class="keyword">END</span>;</span><br><span class="line">$$</span><br><span class="line"><span class="keyword">LANGUAGE</span> plpgsql;</span><br></pre></td></tr></table></figure>
-<p>如果要執行function的話, 只要 select 這個function 的名稱 就會執行了</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="operator">&lt;</span>function_name<span class="operator">&gt;</span> ([<span class="operator">&lt;</span>param<span class="operator">&gt;</span>])</span><br></pre></td></tr></table></figure>
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/01/08/SQL-Function/" rel="prev" title="SQL Function">
+      <i class="fa fa-chevron-left"></i> SQL Function
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
@@ -457,6 +344,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Grok-SerDe"><span class="nav-number">1.</span> <span class="nav-text">Grok SerDe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Table-%E6%AC%84%E4%BD%8D"><span class="nav-number">2.</span> <span class="nav-text">Table 欄位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%95%E7%90%86%E8%B3%87%E6%96%99%E6%A0%BC%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">處理資料格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E9%99%B7"><span class="nav-number">4.</span> <span class="nav-text">缺陷</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%83%E5%BE%97"><span class="nav-number">5.</span> <span class="nav-text">心得</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E7%B6%B2%E5%9D%80"><span class="nav-number">6.</span> <span class="nav-text">參考網址</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
