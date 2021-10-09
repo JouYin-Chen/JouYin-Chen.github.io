@@ -153,6 +153,84 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/10/06/AWS-SSM-Parameter-Store-multiline-string/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JouYin Chen">
+      <meta itemprop="description" content="紀錄記得與不記得">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="自娛・愚人">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/06/AWS-SSM-Parameter-Store-multiline-string/" class="post-title-link" itemprop="url">AWS SSM Parameter Store - multiline string</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-10-06 20:36:42" itemprop="dateCreated datePublished" datetime="2021-10-06T20:36:42+08:00">2021-10-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-09 20:50:55" itemprop="dateModified" datetime="2021-10-09T20:50:55+08:00">2021-10-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="需求："><a href="#需求：" class="headerlink" title="需求："></a>需求：</h3><p>把multi-line的憑證儲存在AWS SSM Parameter store中，在task apply 的時候，可以寫入檔案中，讓程式讀取。</p>
+<h3 id="失敗過程："><a href="#失敗過程：" class="headerlink" title="失敗過程："></a>失敗過程：</h3><p>我把內容複製到Parameter store Value中後，修改了Dockerfile 的指令，取出環境變數，寫成一個檔案然後執行程式。</p>
+<p>經歷過了很多次的失敗，一直出現<code>無法讀取檔案不存在</code>的錯誤，懷疑很多種原因，像是檔案是不是沒有寫成功，路徑是不是寫錯，是不是寫錯內容  </p>
+<h3 id="經歷"><a href="#經歷" class="headerlink" title="經歷"></a>經歷</h3><p>經歷了上述的各種debug，發現：  </p>
+<ol>
+<li><p>複製到Parameter store 中的value，看起來是有換行符號，但在環境變數，會被吃掉。變成說我的value要呈現多行要自己將換行改為<code>\n</code>，變成一行字串，再用Dockerfile echo 的方式寫入檔案。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN CERTIFICATE-----\n1111111\n2222\n333\n-----END CERTIFICATE-----</span><br></pre></td></tr></table></figure></li>
+<li><p>我在dockerfile echo 的時候，沒有加上參數，造成寫入檔案時還是以<code>\n</code>寫入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo -e $CERTIFICATE &gt; /main/cert/new_cert</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li><code>-e</code> 會將字串所出現的字元做處理</li>
+</ul>
+<h3 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h3><p>看起來一點都不難的一件事，也是花了我很多時間。但碰過一次就會知道這個不知道是算坑 還是自己坑自己的小插曲  </p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/23/AWS-Athena-create-table-by-Grok-SerDe/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -357,14 +435,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
